@@ -1,0 +1,13 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+*.iml
+.idea/
+.vscode/
+*.log
+.DS_Store
+.env
+node_modules/
+.ipynb_checkpoints/
+
+# exam subject
+Test ADRIA ENSET 2027.pdf
