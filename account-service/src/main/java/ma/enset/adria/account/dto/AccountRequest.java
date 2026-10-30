@@ -7,6 +7,6 @@ import jakarta.validation.constraints.PositiveOrZero;
 public record AccountRequest(
         @NotBlank String customerReference,
         @NotBlank @Pattern(regexp = "[A-Z]{3}", message = "must be an ISO 4217 code, e.g. EUR") String currency,
-        @PositiveOrZero double initialBalance
+        @PositiveOrZero Double initialBalance
 ) {
 }

@@ -1,11 +1,13 @@
 package ma.enset.adria.account.web.rest;
 
+import jakarta.validation.ConstraintViolationException;
 import ma.enset.adria.account.exception.AccountNotActiveException;
 import ma.enset.adria.account.exception.AccountNotFoundException;
 import ma.enset.adria.account.exception.InsufficientBalanceException;
 import ma.enset.adria.account.exception.InvalidAmountException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -36,6 +38,16 @@ public class RestExceptionHandler {
                 .map(error -> error.getField() + ": " + error.getDefaultMessage())
                 .collect(Collectors.joining(", "));
         return problem(HttpStatus.BAD_REQUEST, "Validation failed", detail);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ProblemDetail handleConstraintViolation(ConstraintViolationException ex) {
+        return problem(HttpStatus.BAD_REQUEST, "Validation failed", ex.getMessage());
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ProblemDetail handleUnreadableBody(HttpMessageNotReadableException ex) {
+        return problem(HttpStatus.BAD_REQUEST, "Malformed request body", "Request body is missing or is not valid JSON");
     }
 
     private ProblemDetail problem(HttpStatus status, String title, String detail) {

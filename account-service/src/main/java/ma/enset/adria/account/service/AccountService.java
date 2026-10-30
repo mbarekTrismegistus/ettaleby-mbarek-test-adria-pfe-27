@@ -1,5 +1,6 @@
 package ma.enset.adria.account.service;
 
+import jakarta.validation.Valid;
 import ma.enset.adria.account.domain.AccountStatus;
 import ma.enset.adria.account.dto.AccountRequest;
 import ma.enset.adria.account.dto.AccountResponse;
@@ -12,7 +13,7 @@ import java.util.UUID;
  */
 public interface AccountService {
 
-    AccountResponse create(AccountRequest request);
+    AccountResponse create(@Valid AccountRequest request);
 
     AccountResponse getById(UUID id);
 
@@ -20,7 +21,7 @@ public interface AccountService {
 
     List<AccountResponse> getByCustomerReference(String customerReference);
 
-    AccountResponse update(UUID id, AccountRequest request);
+    AccountResponse update(UUID id, @Valid AccountRequest request);
 
     void delete(UUID id);
 

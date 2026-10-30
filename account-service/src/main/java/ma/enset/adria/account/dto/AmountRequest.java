@@ -1,6 +1,7 @@
 package ma.enset.adria.account.dto;
 
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
-public record AmountRequest(@Positive double amount) {
+public record AmountRequest(@NotNull @Positive Double amount) {
 }

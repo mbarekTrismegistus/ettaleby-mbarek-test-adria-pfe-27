@@ -14,12 +14,14 @@ import ma.enset.adria.account.exception.InvalidAmountException;
 import ma.enset.adria.account.repository.AccountRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.UUID;
 
 @Slf4j
 @Service
+@Validated
 @Transactional
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
@@ -33,7 +35,7 @@ public class AccountServiceImpl implements AccountService {
                 .id(UUID.randomUUID())
                 .customerReference(request.customerReference())
                 .currency(request.currency())
-                .balance(request.initialBalance())
+                .balance(request.initialBalance() == null ? 0 : request.initialBalance())
                 .status(AccountStatus.ACTIVE)
                 .build();
         Account saved = accountRepository.save(account);
