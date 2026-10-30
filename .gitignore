@@ -8,6 +8,7 @@ target/
 .env
 node_modules/
 .ipynb_checkpoints/
+__pycache__/
 
 # exam subject
 Test ADRIA ENSET 2027.pdf

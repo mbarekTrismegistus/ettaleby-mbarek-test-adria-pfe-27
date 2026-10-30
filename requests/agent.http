@@ -1,0 +1,34 @@
+@baseUrl = http://localhost:8080
+@conversationId = 11111111-2222-3333-4444-555555555555
+@sourceAccountId = REMPLACER-PAR-UUID-COMPTE-SOURCE
+@targetAccountId = REMPLACER-PAR-UUID-COMPTE-DESTINATION
+
+### Découvrir les outils MCP sans appel au LLM
+GET {{baseUrl}}/api/agent/tools
+
+### Consulter les comptes
+POST {{baseUrl}}/api/agent/chat
+Content-Type: application/json
+
+{"message":"Liste les comptes du client CUST-001 et leurs soldes.","conversationId":"{{conversationId}}"}
+
+### Réutiliser le contexte
+POST {{baseUrl}}/api/agent/chat
+Content-Type: application/json
+
+{"message":"Quel est le plafond actuel d'une transaction ?","conversationId":"{{conversationId}}"}
+
+### Paiement — renseigner sourceAccountId avant d'envoyer
+POST {{baseUrl}}/api/agent/chat
+Content-Type: application/json
+
+{"message":"Enregistre un paiement de 25 EUR sur le compte {{sourceAccountId}}, catégorie GROCERY, pays FR.","conversationId":"{{conversationId}}"}
+
+### Virement — renseigner les deux UUID avant d'envoyer
+POST {{baseUrl}}/api/agent/chat
+Content-Type: application/json
+
+{"message":"Effectue un virement de 50 EUR du compte {{sourceAccountId}} vers {{targetAccountId}}, pays FR.","conversationId":"{{conversationId}}"}
+
+### Effacer le contexte
+DELETE {{baseUrl}}/api/agent/conversations/{{conversationId}}
